@@ -1,4 +1,0 @@
-AuthType Basic
-AuthName "IDとパスワードを入力して下さい"
-AuthUserFile /Applications/MAMP/htdocs/portfollio/tagSearch/mainte/.htpasswd
-require valid-user

@@ -24,18 +24,18 @@ $cate_id = $result[0]['id'];
 
 // 選択カテゴリに登録されている単語数(未ログイン)
 // $exId=1;
-$exId = $cate_id;
-$sql = 'select count(category_id) from words where category_id = :cid and user_id = 0';
-$stmt = $db->prepare($sql);
-$stmt->bindValue('cid',$exId,PDO::PARAM_INT);
-$stmt->execute();
-$result = $stmt->fetchall();
-$countWds= $result[0]['count(category_id)'];
+// $exId = $cate_id;
+// $sql = 'select count(category_id) from words where category_id = :cid and user_id = 0';
+// $stmt = $db->prepare($sql);
+// $stmt->bindValue('cid',$exId,PDO::PARAM_INT);
+// $stmt->execute();
+// $result = $stmt->fetchall();
+// $countWds= $result[0]['count(category_id)'];
 
 // 選択カテゴリに対する登録単語(未ログイン)
 // $seId = 1;
 $seId = $cate_id;
-$sql = 'select word from words where category_id = :sid and user_id = 0 order by words.date desc';
+$sql = 'select distinct word from words where category_id = :sid and user_id = 0 order by words.date desc';
 $stmt = $db->prepare($sql);
 $stmt->bindValue('sid',$seId,PDO::PARAM_INT);
 $stmt->execute();
@@ -67,14 +67,14 @@ $users_words= $result;
 
 // ユーザ専用の選択カテゴリに登録されている単語数
 
-$exId = $cate_id;
-$sql = 'select count(category_id) from words where category_id = :cid and user_id = :uid';
-$stmt = $db->prepare($sql);
-$stmt->bindValue('cid',$exId,PDO::PARAM_INT);
-$stmt->bindValue('uid',$_SESSION['login_id'],PDO::PARAM_INT);
-$stmt->execute();
-$result = $stmt->fetchall();
-$count_uWds= $result[0]['count(category_id)'];
+// $exId = $cate_id;
+// $sql = 'select count(category_id) from words where category_id = :cid and user_id = :uid';
+// $stmt = $db->prepare($sql);
+// $stmt->bindValue('cid',$exId,PDO::PARAM_INT);
+// $stmt->bindValue('uid',$_SESSION['login_id'],PDO::PARAM_INT);
+// $stmt->execute();
+// $result = $stmt->fetchall();
+// $count_uWds= $result[0]['count(category_id)'];
 
 // ユーザが登録したカテゴリ一覧
 $sql = 'select distinct categories.category_name from categories join words on categories.id = words.category_id where words.user_id = :uid';

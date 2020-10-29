@@ -1,6 +1,6 @@
 <?php
-ini_set("display_errors",1);
-error_reporting(E_ALL);
+// ini_set("display_errors",1);
+// error_reporting(E_ALL);
 
 // session
 session_start();
@@ -71,7 +71,10 @@ if (!empty($_POST['reset']) || !empty($_POST['cate_reset'])) { #トップペー�
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
+    <!-- fontAwesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+    <!-- style -->
+    <link rel="stylesheet" href="css/style.css">
     <title>ぐーぐる検索</title>
   </head>
   <body>
@@ -81,7 +84,6 @@ if (!empty($_POST['reset']) || !empty($_POST['cate_reset'])) { #トップペー�
         <!-- ログインモーダルトリガー -->
         <?php if (!isset($_SESSION['login_id'])) :?>
         <button type="button" class="btn btn-outline-success my-2 my-sm-0" data-toggle="modal" data-target="#loginModal">ログイン</button>
-        <button type="button" class="btn btn-outline-info my-2 my-sm-0" data-toggle="modal" data-target="#signUpModal">新規登録</button>
         <?php else:?>
         <a type="button" href="logout.php" class="btn btn-outline-success my-2 my-sm-0">ログアウト</a>
         <?php endif;?>
@@ -97,13 +99,17 @@ if (!empty($_POST['reset']) || !empty($_POST['cate_reset'])) { #トップペー�
                     </button>
                 </div>
                 <form method="POST" action="index.php">
-                <div class="modal-body">
+                <div class="modal-body text-center">
                     <label for="user_name">ユーザー名</label>
-                    <input type="text" name="user_name" size="40" maxlength="20">
+                    <input class="m-1" type="text" name="user_name" size="30" maxlength="20">
+                    <br>
                     <label for="user_pass">パスワード</label>
-                    <input type="password" name="user_pass" size="40" maxlength="20">
+                    <input class="m-1" type="password" name="user_pass" size="30" maxlength="20">
                 </div>
                 <div class="modal-footer">
+                <!-- 新規登録モーダルトリガー -->
+                    <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#signUpModal">新規登録</button>
+
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">キャンセル</button>
                     <input type="submit" value="ログイン" class="btn btn-info" name="user_log">
                 </div>
@@ -137,10 +143,6 @@ if (!empty($_POST['reset']) || !empty($_POST['cate_reset'])) { #トップペー�
             </div>
         </div>
     </div>
-
-
-
-
   <!-- ヘッダーここまで -->
   
   <!-- ログインメッセージの表示 -->
@@ -158,30 +160,35 @@ if (!empty($_POST['reset']) || !empty($_POST['cate_reset'])) { #トップペー�
   <!-- タイトル -->
     <h1 class="m-3">ぐーぐる検索</h1>
   <!-- 検索バー -->
-    <form method="POST" id="cse-search-box" action="index.php">
+    <form method="POST" id="cse-search-box" action="index.php" class="search_container">
     <input type="hidden" name="ie" value="UTF-8" >
-    <input type="text" name="q" size="31" value="<?php echo h($_POST['q']??"")?>" >
-    <input type="submit" name="search" value="検索">
+    <input type="text" name="q" size="60" value="<?php echo h($_POST['q']??"")?>" placeholder="キーワード検索">
+    
+    <input type="submit" name="search"  value="&#xf002;" class="fas">
     </form>
   <!-- カテゴリ表示 -->
-    <div>
-    <?php if ($pageFlag === 0) :?>
+    <div class="border">
+      <?php if ($pageFlag === 0) :?>
+      <h3>カテゴリ一覧</h3>
       <form method="POST" action="index.php">
       <?php if (!isset($_SESSION['login_id'])) :?>
         <?php foreach ($cNames as $key => $values) :?>
         <?php foreach ($values as $value) :?>
-        <input type="submit" value="<?php echo $value;?>" name="cate">
+
+        <input type="submit" value="<?php echo $value;?> " name="cate" class="catebtn m-1">
+        <!-- <a href="" class="btn btn-radius-solid">PUSH！<i class="fas fa-angle-right fa-position-right"></i></a> -->
         <?php endforeach;?>
         <?php endforeach;?>
       <?php else:?>
         <?php foreach ($ucates_name as $key => $values) :?>
         <?php foreach ($values as $value) :?>
-        <input type="submit" value="<?php echo $value;?>" name="cate">
+        <input type="submit" value="<?php echo $value;?>" name="cate" class="catebtn m-1">
         <?php endforeach;?>
         <?php endforeach;?>
       <?php endif;?>
         <!-- 追加ボタン -->
-        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#addCell">追加</button>
+      <?php if (isset($_SESSION['login_id'])) :?>
+        <button type="button" class="btn  btn-info addbtn" data-toggle="modal" data-target="#addCell">追加</button>
         <!-- 追加ボタン押下後のモーダル表示 -->
         <div class="modal fade" id="addCell" tabindex="-1" role="dialog" aria-labelledby="addCellModalTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -201,7 +208,8 @@ if (!empty($_POST['reset']) || !empty($_POST['cate_reset'])) { #トップペー�
                     </div>
                 </div>
             </div>
-        </div>
+        </div> 
+      <?php endif;?>   
       </form>
     <?php endif;?>
 
@@ -209,20 +217,25 @@ if (!empty($_POST['reset']) || !empty($_POST['cate_reset'])) { #トップペー�
     <form method="POST" action="index.php">
     
     <!-- 該当ワードを全て出力 -->
-    <ul> 
+    <h4><?php echo $_POST['cate'];?></h4>
       <?php if (!isset($_SESSION['login_id'])) :?>
     <!-- 未ログイン時 -->
-        <?php for ($i=0;$i<$countWds;$i++) :?>
-          <li><?php echo $select_words[$i]['word'];?></li>
-        <?php endfor;?>
+        <?php foreach ($select_words as  $key => $values) :?>
+        <?php foreach ($values as $value) :?>
+            <input type="submit" class="m-1 wordbtn" value="<?php echo $value;?>" name="q">
+        <?php endforeach;?>
+        <?php endforeach;?>
       <?php else:?>
-    <!-- ログイン時 -->
-        <?php for ($i=0;$i<$count_uWds;$i++) :?>
-          <li><?php echo $users_words[$i]['word'];?></li>
-        <?php endfor;?>
+          <!-- ログイン時 -->
+        <?php foreach ($users_words as  $key => $values) :?>
+        <?php foreach ($values as $value) :?>
+            <input type="submit" value="<?php echo $value;?>" name="q">
+        <?php endforeach;?>
+        <?php endforeach;?>
       <?php endif;?>
-    </ul>
-    <input type="submit" value="トップに戻る" name="reset">
+      <br>
+      <input type="submit" class="mt-3 topbtn" value="トップに戻る" name="reset">
+      <input type="hidden" value="wordSelect" name="search">
     </form>
     <?php $_SESSION['search_category'] = h($_POST['cate']); ?>
     <?php endif;?>
@@ -249,47 +262,43 @@ if (!empty($_POST['reset']) || !empty($_POST['cate_reset'])) { #トップペー�
         <input type="radio" value="<?php echo $value;?>" name="after_cate"><?php echo $value;?>
         <?php endforeach;?>
         <?php endforeach;?>
-        <input type="submit" value="このカテゴリに登録する" name="after_cate_sub">
-        <?php $_SESSION['word'] ="";?>
-        <?php $_SESSION['word'] = h($_POST['q']);?>
       <?php else:?>
         <?php foreach ($ucates_name as $key => $values) :?>
         <?php foreach ($values as $value) :?>
         <input type="radio" value="<?php echo $value;?>" name="after_cate"><?php echo $value;?>
         <?php endforeach;?>
         <?php endforeach;?>
+      <?php endif;?> <!-- ログインされているかに対する閉じタグ -->
+        <br>
         <input type="submit" value="このカテゴリに登録する" name="after_cate_sub">
         <?php $_SESSION['word'] = "" ;?>
         <?php $_SESSION['word'] = h($_POST['q']) ;?>
-      <?php endif;?> <!-- ログインされているかに対する閉じタグ -->
     </form>
-    <?php else:?> <!-- $_SESSIONの値が空かに対する閉じタグ -->
-      <form method="POST" action="index.php">
-      <input type="submit" value="トップに戻る" name="cate_reset">
-      </form>
-    <?php endif;?>
-
+    <?php endif;?><!-- $_SESSIONの値が空かに対する閉じタグ -->
+    
     <?php require ('smsearch.php');?>
     <!-- 検索結果表示デザイン -->
-
+    
     <!-- 検索単語登録 -->
     <?php require ('wordinsert.php');?>
-
     
+    
+    <form method="POST" action="index.php">
+    <input type="submit" class="mt-3 topbtn" value="トップに戻る" name="cate_reset">
+    </form>
     
     <?php endif;?> <!-- $pageFlagに対する閉じタグ -->
-
+    
     <!-- 検索後カテゴリ選択時 -->
     <?php if ($pageFlag === 4) :?>
-    <?php require ('after_wordinsert.php');?>
+      <?php require ('after_wordinsert.php');?>
     <p>単語登録完了しました</p>
     <form method="POST" action="index.php">
-    <input type="submit" value="トップに戻る" name="cate_reset">
+    <input type="submit" class="mt-3 topbtn" value="トップに戻る" name="cate_reset">
     </form>
     <?php endif;?>
-
-    </div>
-
+    
+  </div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

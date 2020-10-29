@@ -3,22 +3,21 @@
 
 
 // 選択されているカテゴリidの取得
-$sql = 'select id from categories where category_name = :cname';
-$stmt=$db->prepare($sql);
-$stmt->bindValue('cname',h($_SESSION['search_category']),PDO::PARAM_STR);
-$stmt->execute();
-$select_id = $stmt->fetchall(); 
+if (isset($_SESSION['search_category'])) {
 
-
-
+    $sql = 'select id from categories where category_name = :cname';
+    $stmt=$db->prepare($sql);
+    $stmt->bindValue('cname',h($_SESSION['search_category']),PDO::PARAM_STR);
+    $stmt->execute();
+    $select_id = $stmt->fetchall(); 
 // 検索に使った単語をdb追加
 
 
 if (mb_strlen($_POST['q']) === 0) {
-    $er_wrdinst = 1;   
+    $er_wrdinst2 = 1;   
 }
 try {
-    if (isset($er_wrdinst)) {
+    if (isset($er_wrdinst2)) {
         throw new Exception("単語を入力してください");
     }
 
@@ -31,4 +30,4 @@ try {
 
 } catch (Exception $e) {
     echo $e->getmessage();
-}
+}}

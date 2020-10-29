@@ -1,0 +1,23 @@
+
+    <?php if($dammy->$categoryId[h($_POST['cate'])] === 1):?>
+    <?php for($i=0;$i<count($dammy->$words['work']);$i++):?>
+    <li><?php echo $dammy->$words['work'][$i];?></li>
+    <?php endfor;?>
+    <?php endif;?>
+
+    <?php if($dammy->$categoryId[h($_POST['cate'])] === 2):?>
+    <?php for($i=0;$i<count($dammy->$words['hobby']);$i++):?>
+    <li><?php echo $dammy->$words['hobby'][$i];?></li>
+    <?php endfor;?>
+    <?php endif;?>
+
+    <?php if($dammy->$categoryId[h($_POST['cate'])] === 3):?>
+    <?php for($i=0;$i<count($dammy->$words['other']);$i++):?>
+    <li><?php echo $dammy->$words['other'][$i];?></li>
+    <?php endfor;?>
+    <?php endif;?>
+
+    
+    for($k=1;$k<=count($categoryId);$k++):
+    if($dammy->$categoryId[h($_POST['cate'])] === $k)
+    $php for($i=0;)

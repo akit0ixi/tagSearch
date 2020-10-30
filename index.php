@@ -57,7 +57,7 @@ if (!empty($_POST['reset']) || !empty($_POST['cate_reset'])) { #トップペー�
 // var_dump($_POST);
 // // var_dump($_POST['user_pass']);
 // // var_dump($_POST['user_put']);
-// var_dump($pageFlag);
+var_dump($pageFlag);
 // var_dump($error);
 // echo "</pre>";
 ?>
@@ -163,9 +163,15 @@ if (!empty($_POST['reset']) || !empty($_POST['cate_reset'])) { #トップペー�
     <form method="POST" id="cse-search-box" action="index.php" class="search_container">
     <input type="hidden" name="ie" value="UTF-8" >
     <input type="text" name="q" size="60" value="<?php echo h($_POST['q']??"")?>" placeholder="キーワード検索">
-    
     <input type="submit" name="search"  value="&#xf002;" class="fas">
-    </form>
+  </form>
+
+  <!-- URLコピーのチェックボタン -->
+  <?php if ($pageFlag ===3):?>
+    <input type="checkbox" id="copy" name="copy">
+    <label for="copy">URLをコピーしつつ開く</label>
+  <?php endif;?>
+
   <!-- カテゴリ表示 -->
     <div class="border">
       <?php if ($pageFlag === 0) :?>
@@ -278,6 +284,7 @@ if (!empty($_POST['reset']) || !empty($_POST['cate_reset'])) { #トップペー�
     
     <?php require ('smsearch.php');?>
     <!-- 検索結果表示デザイン -->
+    <?php require ('searchResult.php');?>
     
     <!-- 検索単語登録 -->
     <?php require ('wordinsert.php');?>
@@ -307,10 +314,21 @@ if (!empty($_POST['reset']) || !empty($_POST['cate_reset'])) { #トップペー�
   </footer>
 
     <!-- Optional JavaScript -->
+    <!-- URLをコピペする -->
+    <script>
+        function copyToClipboard(obj) {
+          var copyTarget = obj.href;
+          copyTarget.select();
+          document.execCommand("Copy");
+            alert("コピーできました！ : " + copyTarget.value);
+        }
+    </script>
+
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
   </body>
 </html>
+
 

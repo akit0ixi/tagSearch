@@ -229,7 +229,7 @@ if (!empty($_POST['reset']) || !empty($_POST['cate_reset'])) { #トップペー�
           <!-- ログイン時 -->
         <?php foreach ($users_words as  $key => $values) :?>
         <?php foreach ($values as $value) :?>
-            <input type="submit" value="<?php echo $value;?>" name="q">
+            <input type="submit" class="m-1 wordbtn" value="<?php echo $value;?>" name="q">
         <?php endforeach;?>
         <?php endforeach;?>
       <?php endif;?>
@@ -299,6 +299,12 @@ if (!empty($_POST['reset']) || !empty($_POST['cate_reset'])) { #トップペー�
     <?php endif;?>
     
   </div>
+
+
+  <!-- フッター -->
+  <footer>
+    <p class="bg-dark text-white text-center">© 2020 Kazuki.I</p>
+  </footer>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

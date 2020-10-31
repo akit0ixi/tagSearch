@@ -166,11 +166,6 @@ var_dump($pageFlag);
     <input type="submit" name="search"  value="&#xf002;" class="fas">
   </form>
 
-  <!-- URLコピーのチェックボタン -->
-  <?php if ($pageFlag ===3):?>
-    <input type="checkbox" id="copy" name="copy">
-    <label for="copy">URLをコピーしつつ開く</label>
-  <?php endif;?>
 
   <!-- カテゴリ表示 -->
     <div class="border">
@@ -182,7 +177,6 @@ var_dump($pageFlag);
         <?php foreach ($values as $value) :?>
 
         <input type="submit" value="<?php echo $value;?> " name="cate" class="catebtn m-1">
-        <!-- <a href="" class="btn btn-radius-solid">PUSH！<i class="fas fa-angle-right fa-position-right"></i></a> -->
         <?php endforeach;?>
         <?php endforeach;?>
       <?php else:?>
@@ -314,15 +308,7 @@ var_dump($pageFlag);
   </footer>
 
     <!-- Optional JavaScript -->
-    <!-- URLをコピペする -->
-    <script>
-        function copyToClipboard(obj) {
-          var copyTarget = obj.href;
-          copyTarget.select();
-          document.execCommand("Copy");
-            alert("コピーできました！ : " + copyTarget.value);
-        }
-    </script>
+   
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
